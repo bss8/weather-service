@@ -1,0 +1,4 @@
+edu\txstate\bss64\weatherclient\WeatherServiceClient.class
+edu\txstate\bss64\weatherclient\WeatherItem.class
+edu\txstate\bss64\weatherclient\WeatherListModel.class
+edu\txstate\bss64\weatherclient\WeatherCellRenderer.class
