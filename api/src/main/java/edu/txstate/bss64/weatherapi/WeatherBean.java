@@ -18,6 +18,7 @@ public class WeatherBean implements Serializable {
     private final String temperature;      // city's temperature
     private final String description;      // weather description
     private final String precipitation;    // precipitation
+    private final String forecast;
     private final ImageIcon image;         // weather image
 
     private static final Properties imageNames;
@@ -49,14 +50,15 @@ public class WeatherBean implements Serializable {
      * @param cityTemperature
      */
     public WeatherBean(String city, String weatherDescription,
-                       String cityTemperature, String chanceForRain) {
+                       String cityTemperature, String chanceForRain, String forecast) {
         this.cityName = city;
         this.temperature = cityTemperature;
         this.description = weatherDescription.trim();
         this.precipitation = chanceForRain.trim();
+        this.forecast = forecast.trim();
 
         System.out.println("Update weather bean: City=" + city + "temp=" + cityTemperature +
-                "condition=" + weatherDescription + "prcpt:" + precipitation);
+                "condition=" + weatherDescription + "prcpt:" + precipitation + "frcst=" + forecast);
 
         URL url = WeatherBean.class.getResource("/images/" +
                 imageNames.getProperty(description, "noinfo.jpg"));
@@ -82,6 +84,9 @@ public class WeatherBean implements Serializable {
 
     // get precipitation
     public String getPrecipitation() { return precipitation; }
+
+    // get forecast
+    public String getForecast() { return forecast; }
 
     // get weather image
     public ImageIcon getImage() {

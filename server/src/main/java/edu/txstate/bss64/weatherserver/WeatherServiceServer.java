@@ -72,7 +72,7 @@ public class WeatherServiceServer implements WeatherService {
                 // 45 characters long. If the line length is not at
                 // least 40 characters long, done processing data.
 
-                String cityName, temperatures, precipitation, condition;
+                String cityName, temperatures, precipitation, condition, forecast;
 
                 System.out.println("Update weather information...4");
 
@@ -92,6 +92,7 @@ public class WeatherServiceServer implements WeatherService {
                     temperatures = inputLine.substring(16, 23);
                     precipitation = inputLine.substring(23, 32);
                     condition = inputLine.substring(32, 38);
+                    forecast = inputLine.substring(38);
 
                     cityName = cityName.trim();
                     temperatures = temperatures.trim();
@@ -103,7 +104,8 @@ public class WeatherServiceServer implements WeatherService {
                             cityName,
                             condition,
                             temperatures,
-                            precipitation);
+                            precipitation,
+                            forecast);
 
                     // add WeatherBean to List
                     weatherInformation.add(weather);

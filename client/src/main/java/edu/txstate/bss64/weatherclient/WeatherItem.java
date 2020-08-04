@@ -25,7 +25,7 @@ public class WeatherItem extends JPanel {
     // WeatherItem is loaded into memory
     static {
         // get URL for background image
-        URL url = WeatherItem.class.getResource("/images/back.jpg");
+        URL url = WeatherItem.class.getResource("/images/back_1.jpg");
 
         // background image for each city's weather info
         backgroundImage = new ImageIcon(url);
@@ -57,8 +57,9 @@ public class WeatherItem extends JPanel {
         g.drawString(weatherBean.getCityName(), 10, 19);
         g.drawString(weatherBean.getTemperature(), 130, 19);
         g.drawString(weatherBean.getPrecipitation(), 175, 19);
+        g.drawString(weatherBean.getForecast(), 205, 19);
         // display weather image
-        weatherBean.getImage().paintIcon(this, g, 253, 1);
+        weatherBean.getImage().paintIcon(this, g, 353, 1);
     } // end method paintComponent
 
     /**
