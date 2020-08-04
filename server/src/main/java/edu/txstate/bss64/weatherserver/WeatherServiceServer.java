@@ -27,7 +27,7 @@ public class WeatherServiceServer implements WeatherService {
 
     ;
 
-    private List weatherInformation;  // WeatherBean objects
+    private List<WeatherBean> weatherInformation;  // WeatherBean objects
 
     // get weather information from NWS
     private void updateWeatherConditions() {
@@ -43,42 +43,42 @@ public class WeatherServiceServer implements WeatherService {
                     "https://forecast.weather.gov/product.php?site=CRH&product=SCS&issuedby=01");
 
             // set up text input stream to read Web page contents
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(url.openStream()));
+            try (BufferedReader in = new BufferedReader(
+                    new InputStreamReader(url.openStream()))) {
 
-            // helps determine starting point of data on Web page
-            //String separator = "TAV10";
-            //String separator = "TXZ083>090-098>101-113>116-127>130-139>142-154-155-030000-";
-            //String separator = "CENTRAL AND SOUTH CENTRAL TEXAS";
+                // helps determine starting point of data on Web page
+                //String separator = "TAV10";
+                //String separator = "TXZ083>090-098>101-113>116-127>130-139>142-154-155-030000-";
+                //String separator = "CENTRAL AND SOUTH CENTRAL TEXAS";
 
-            System.err.println("Update weather information...1");
+                System.err.println("Update weather information...1");
 
-            String separator = "TEMPERATURES INDICATE";
+                String separator = "TEMPERATURES INDICATE";
 
-            String line = "";
-            // locate the line start starts with the separate string in Web page
-            //while ( ! (line = in.readLine().startsWith( separator ) ))
-            //  System.err.println( line );    // do nothing
-            for (line = in.readLine(); !line.startsWith(separator); line = in.readLine())
-                System.err.println(line);    // do nothing
+                String line = "";
+                // locate the line start starts with the separate string in Web page
+                //while ( ! (line = in.readLine().startsWith( separator ) ))
+                //  System.err.println( line );    // do nothing
+                for (line = in.readLine(); !line.startsWith(separator); line = in.readLine())
+                    System.err.println(line);    // do nothing
 
-            separator = "CITY";
+                separator = "CITY";
 
-            for (line = in.readLine(); !line.startsWith(separator); line = in.readLine())
-                System.err.println(line);    // do nothing
+                for (line = in.readLine(); !line.startsWith(separator); line = in.readLine())
+                    System.err.println(line);    // do nothing
 
-            // locate the line start starts with the separate string in Web page
-            //while ( !in.readLine().startsWith( separator ) )
-            //  ;    // do nothing
+                // locate the line start starts with the separate string in Web page
+                //while ( !in.readLine().startsWith( separator ) )
+                //  ;    // do nothing
 
-            // strings representing headers on Travelers Forecast
-            // Web page for daytime and nighttime weather
-            //String dayHeader =
-            //  "CITY            WEA     HI/LO   WEA     HI/LO";
-            //"CITY            WEA     LO/HI   WEA     LO/HI";
-            //String nightHeader =
-            //   "CITY            WEA     LO/HI   WEA     LO/HI";
-            // String dayHeader = "CITY             LO/HI   PCPN   WEA     LO/HI   WEA     LO/HI";
+                // strings representing headers on Travelers Forecast
+                // Web page for daytime and nighttime weather
+                //String dayHeader =
+                //  "CITY            WEA     HI/LO   WEA     HI/LO";
+                //"CITY            WEA     LO/HI   WEA     LO/HI";
+                //String nightHeader =
+                //   "CITY            WEA     LO/HI   WEA     LO/HI";
+                // String dayHeader = "CITY             LO/HI   PCPN   WEA     LO/HI   WEA     LO/HI";
 /*
 Selected Cities
 
@@ -189,79 +189,78 @@ COLUMBUS OH      84  62         PTCLDY  82/62   TSTRMS  84/70
 
 $$
 */
-            //nightHeader = "CITY           SKY/WX    TMP DP  RH WIND       PRES   REMARKS";
-            //nightHeader = "OTHER LOCATIONS IN TEXAS";
-            //nightHeader = "WESTERN NORTH TEXAS";
+                //nightHeader = "CITY           SKY/WX    TMP DP  RH WIND       PRES   REMARKS";
+                //nightHeader = "OTHER LOCATIONS IN TEXAS";
+                //nightHeader = "WESTERN NORTH TEXAS";
 
-            String inputLine = "";
+                String inputLine = "";
 
-            System.err.println("Update weather information...2" + inputLine);
+                System.err.println("Update weather information...2" + inputLine);
 
-            // locate header that begins weather information
-            //do {
-            //   inputLine = in.readLine();
-            //} while ( !inputLine.equals( dayHeader ) &&
-            //          !inputLine.equals( nightHeader ) );
-            //
-            weatherInformation = new ArrayList(); // create List
+                // locate header that begins weather information
+                //do {
+                //   inputLine = in.readLine();
+                //} while ( !inputLine.equals( dayHeader ) &&
+                //          !inputLine.equals( nightHeader ) );
+                //
+                weatherInformation = new ArrayList<>(); // create List
 
-            // create WeatherBeans containing weather data and
-            // store in weatherInformation Vector
+                // create WeatherBeans containing weather data and
+                // store in weatherInformation Vector
 
-            inputLine = in.readLine();  // skip an empty line
-            inputLine = in.readLine();  // first city info line
-            System.err.println("Update weather information...3" + inputLine);
-            //inputLine = in.readLine();  // skip the title of the section
-            //inputLine = in.readLine();  // get first city's info
+                inputLine = in.readLine();  // skip an empty line
+                inputLine = in.readLine();  // first city info line
+                System.err.println("Update weather information...3" + inputLine);
+                //inputLine = in.readLine();  // skip the title of the section
+                //inputLine = in.readLine();  // get first city's info
 
-            // The portion of inputLine containing relevant data is
-            // 45 characters long. If the line length is not at
-            // least 40 characters long, done processing data.
+                // The portion of inputLine containing relevant data is
+                // 45 characters long. If the line length is not at
+                // least 40 characters long, done processing data.
 
-            String cityName = "";
-            String temperatures = "";
-            String condition = "";
+                String cityName = "";
+                String temperatures = "";
+                String condition = "";
 
-            System.err.println("Update weather information...4");
+                System.err.println("Update weather information...4");
 
-            while (inputLine.length() > 10) {
+                while (inputLine.length() > 10) {
 
-                //System.err.println( "Update weather information...3.5"+inputLine);
-                //System.err.println( "Update weather information...3.6"+inputLine.substring(0,15)+"ppp");
-                //System.err.println( "1qqq");
-                //System.err.println( "qqq"+inputLine.substring(15,1)+"rrrr");
-                // Create WeatherBean object for city. First 16
-                // characters are city name. Next, six characters
-                // are weather description. Next six characters
-                // are HI/LO or LO/HI temperature.
-                //System.err.println( "Update weather information...4"+inputLine.substring( 0, 16 )+"22"+inputLine.substring( 16, 24 )+"333"+inputLine.substring( 24, 32 ) +"44" +inputLine.substring( 40, 45  )+"EEE");
-                //System.err.println( "Update weather information...----11111--"+inputLine.substring( 0, 17 )+"--2222--"+inputLine.substring( 17, 20 )+"--333--"+inputLine.substring( 21, 23 ) +"---4444---" +inputLine.substring( 24, 32 )+"---555---"+inputLine.substring( 32, 38 )+"----66666----"+inputLine.substring( 36, 40 )+"----66666----");
-                System.err.println(inputLine.substring(0, 17) + "--" + inputLine.substring(33, 38) + "--" + inputLine.substring(17, 20));
+                    System.err.println( "Update weather information...3.5"+inputLine);
+                    System.err.println( "Update weather information...3.6"+inputLine.substring(0,15)+"ppp");
+                    //System.err.println( "1qqq");
+                    //System.err.println( "qqq"+inputLine.substring(15,1)+"rrrr");
+                    // Create WeatherBean object for city. First 16
+                    // characters are city name. Next, six characters
+                    // are weather description. Next six characters
+                    // are HI/LO or LO/HI temperature.
+                    System.err.println( "Update weather information...4"+inputLine.substring( 0, 16 )+"22"+inputLine.substring( 16, 24 )+"333"+inputLine.substring( 24, 32 ) +"44" +inputLine.substring( 40, 45  )+"EEE");
+                    System.err.println( "Update weather information...----11111--"+inputLine.substring( 0, 17 )+"--2222--"+inputLine.substring( 17, 20 )+"--333--"+inputLine.substring( 21, 23 ) +"---4444---" +inputLine.substring( 24, 32 )+"---555---"+inputLine.substring( 32, 38 )+"----66666----"+inputLine.substring( 36, 40 )+"----66666----");
+                    System.err.println(inputLine.substring(0, 17) + "--" + inputLine.substring(33, 38) + "--" + inputLine.substring(17, 20));
 
 
-                cityName = inputLine.substring(0, 16);
-                temperatures = inputLine.substring(16, 23);
-                condition = inputLine.substring(32, 38);
+                    cityName = inputLine.substring(0, 16);
+                    temperatures = inputLine.substring(16, 23);
+                    condition = inputLine.substring(32, 38);
 
-                cityName = cityName.trim();
-                temperatures = temperatures.trim();
-                condition = condition.trim();
+                    cityName = cityName.trim();
+                    temperatures = temperatures.trim();
+                    condition = condition.trim();
 
-                System.err.println("City:" + cityName + ", condition:" + condition + ",temp:" + temperatures);
-                WeatherBean weather = new WeatherBean(
-                        cityName,
-                        condition,
-                        temperatures);
+                    System.err.println("City:" + cityName + ", condition:" + condition + ",temp:" + temperatures);
+                    WeatherBean weather = new WeatherBean(
+                            cityName,
+                            condition,
+                            temperatures);
 
-                // add WeatherBean to List
-                weatherInformation.add(weather);
+                    // add WeatherBean to List
+                    weatherInformation.add(weather);
 
-                inputLine = in.readLine();  // get next city's info
+                    inputLine = in.readLine();  // get next city's info
+                }
+
+                System.err.println("Initializing WeatherService...5");
             }
-
-            System.err.println("Initializing WeatherService...5");
-
-            in.close();  // close connection to NWS Web server
 
             System.err.println("Weather information updated.");
         }
