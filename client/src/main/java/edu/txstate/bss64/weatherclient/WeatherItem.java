@@ -1,40 +1,48 @@
-package edu.txstate.bss64.weatherclient;// WeatherItem.java
+package edu.txstate.bss64.weatherclient;
 // WeatherItem displays a city's weather information in a JPanel.
-//package com.deitel.advjhtp1.rmi.weather;
-
-// Java core packages
 
 import edu.txstate.bss64.weatherapi.WeatherBean;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.net.URL;
 
+/**
+ *
+ */
 public class WeatherItem extends JPanel {
-
     private static final long serialVersionUID = 1;
-    private WeatherBean weatherBean;  // weather information
+    private final WeatherBean weatherBean;  // weather information
 
     // background ImageIcon
-    private static ImageIcon backgroundImage;
+    private static final ImageIcon backgroundImage;
 
     // static initializer block loads background image when class
     // WeatherItem is loaded into memory
     static {
-
         // get URL for background image
-        URL url = WeatherItem.class.getResource("/images/back.jpg");
+        URL url = WeatherItem.class.getResource("/images/back_1.jpg");
 
         // background image for each city's weather info
         backgroundImage = new ImageIcon(url);
     }
 
-    // initialize a WeatherItem
+    /**
+     * initialize a WeatherItem
+     * @param bean WeatherBean with info for cities' weather
+     */
     public WeatherItem(WeatherBean bean) {
         weatherBean = bean;
     }
 
-    // display information for city's weather
+    /**
+     * display information for city's weather
+     * @param g a Graphics object
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -48,31 +56,19 @@ public class WeatherItem extends JPanel {
         g.setColor(Color.white);
         g.drawString(weatherBean.getCityName(), 10, 19);
         g.drawString(weatherBean.getTemperature(), 130, 19);
-
+        g.drawString(weatherBean.getPrecipitation(), 175, 19);
+        g.drawString(weatherBean.getForecast(), 205, 19);
         // display weather image
-        weatherBean.getImage().paintIcon(this, g, 253, 1);
-
+        weatherBean.getImage().paintIcon(this, g, 353, 1);
     } // end method paintComponent
 
-    // make WeatherItem's preferred size the width and height of
-    // the background image
+    /**
+     * make WeatherItem's preferred size the width and height of
+     *     the background image
+     * @return dimensions of background image
+     */
     public Dimension getPreferredSize() {
         return new Dimension(backgroundImage.getIconWidth(),
                 backgroundImage.getIconHeight());
     }
-}
-
-/**************************************************************************
- * (C) Copyright 2001 by Deitel & Associates, Inc. and Prentice Hall.     *
- * All Rights Reserved.                                                   *
- *                                                                        *
- * DISCLAIMER: The authors and publisher of this book have used their     *
- * best efforts in preparing the book. These efforts include the          *
- * development, research, and testing of the theories and programs        *
- * to determine their effectiveness. The authors and publisher make       *
- * no warranty of any kind, expressed or implied, with regard to these    *
- * programs or to the documentation contained in these books. The authors *
- * and publisher shall not be liable in any event for incidental or       *
- * consequential damages in connection with, or arising out of, the       *
- * furnishing, performance, or use of these programs.                     *
- *************************************************************************/
+} // end class WeatherItem
