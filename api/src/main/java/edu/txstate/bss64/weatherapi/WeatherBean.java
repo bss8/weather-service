@@ -1,10 +1,7 @@
-package edu.txstate.bss64.weatherapi;// WeatherBean.java
+package edu.txstate.bss64.weatherapi;
 // WeatherBean maintains weather information for one city.
-//package com.deitel.advjhtp1.rmi.weather;
 
-// Java core packages
-
-import javax.swing.*;
+import javax.swing.ImageIcon;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,15 +10,17 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Properties;
 
+/**
+ *
+ */
 public class WeatherBean implements Serializable {
+    private final String cityName;         // name of city
+    private final String temperature;      // city's temperature
+    private final String description;      // weather description
+    private final String precipitation;    // precipitation
+    private final ImageIcon image;         // weather image
 
-    //  private static final long serialVersionUID = 1;
-    private String cityName;         // name of city
-    private String temperature;      // city's temperature
-    private String description;      // weather description
-    private ImageIcon image;         // weather image
-
-    private static Properties imageNames;
+    private static final Properties imageNames;
 
     // initialize imageNames when class WeatherInfo
     // is loaded into memory
@@ -32,35 +31,37 @@ public class WeatherBean implements Serializable {
         // properties file
         try {
             // obtain URL for properties file
-            //URL url = WeatherBean.class.getResource(
-            //        "imagenames.properties");
             File file = new File(WeatherBean.class.getResource("/imagenames.properties").toURI());
             // load properties file contents
             imageNames.load(new FileInputStream(file));
         }
-
         // process exceptions from opening file
         catch (IOException | URISyntaxException ioException) {
             ioException.printStackTrace();
         }
-
     } // end static block
 
-    // WeatherBean constructor
+    /**
+     * WeatherBean constructor
+     *
+     * @param city
+     * @param weatherDescription
+     * @param cityTemperature
+     */
     public WeatherBean(String city, String weatherDescription,
-                       String cityTemperature) {
-        cityName = city;
-        temperature = cityTemperature;
-        description = weatherDescription.trim();
+                       String cityTemperature, String chanceForRain) {
+        this.cityName = city;
+        this.temperature = cityTemperature;
+        this.description = weatherDescription.trim();
+        this.precipitation = chanceForRain.trim();
 
-
-        System.err.println("Update weather bean: City=" + city + "temp=" + cityTemperature + "condition=" + weatherDescription);
+        System.out.println("Update weather bean: City=" + city + "temp=" + cityTemperature +
+                "condition=" + weatherDescription + "prcpt:" + precipitation);
 
         URL url = WeatherBean.class.getResource("/images/" +
                 imageNames.getProperty(description, "noinfo.jpg"));
 
-        // get weather image name or noinfo.jpg if weather
-        // description not found
+        // get weather image name or noinfo.jpg if weather description not found
         image = new ImageIcon(url);
     }
 
@@ -79,23 +80,11 @@ public class WeatherBean implements Serializable {
         return description;
     }
 
+    // get precipitation
+    public String getPrecipitation() { return precipitation; }
+
     // get weather image
     public ImageIcon getImage() {
         return image;
     }
-}
-
-/**************************************************************************
- * (C) Copyright 2001 by Deitel & Associates, Inc. and Prentice Hall.     *
- * All Rights Reserved.                                                   *
- *                                                                        *
- * DISCLAIMER: The authors and publisher of this book have used their     *
- * best efforts in preparing the book. These efforts include the          *
- * development, research, and testing of the theories and programs        *
- * to determine their effectiveness. The authors and publisher make       *
- * no warranty of any kind, expressed or implied, with regard to these    *
- * programs or to the documentation contained in these books. The authors *
- * and publisher shall not be liable in any event for incidental or       *
- * consequential damages in connection with, or arising out of, the       *
- * furnishing, performance, or use of these programs.                     *
- *************************************************************************/
+} // end WeatherBean

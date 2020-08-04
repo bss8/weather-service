@@ -6,7 +6,7 @@ class WeatherBeanTest {
     WeatherBean weatherBean;
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
-        weatherBean = new WeatherBean("Austin", "VRHOT", "101");
+        weatherBean = new WeatherBean("Austin", "VRHOT", "101", ".10");
     }
 
     @org.junit.jupiter.api.AfterEach
