@@ -6,5 +6,5 @@ TIMEOUT /T 3
 call startrmi.bat
 TIMEOUT /T 4
 call startserver.bat
-TIMEOUT /T 2
+TIMEOUT /T 4
 call startclient.bat
