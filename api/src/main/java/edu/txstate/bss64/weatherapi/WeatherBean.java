@@ -1,11 +1,9 @@
 package edu.txstate.bss64.weatherapi;
 // WeatherBean maintains weather information for one city.
 
+import javax.print.DocFlavor;
 import javax.swing.ImageIcon;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Properties;

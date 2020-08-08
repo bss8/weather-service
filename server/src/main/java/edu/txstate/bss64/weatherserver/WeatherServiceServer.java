@@ -16,6 +16,9 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -24,7 +27,6 @@ public class WeatherServiceServer implements WeatherService {
 
     public WeatherServiceServer() {
         super();
-        updateWeatherConditions();
     }
 
     private List<WeatherBean> weatherInformation;  // WeatherBean objects
@@ -148,13 +150,18 @@ public class WeatherServiceServer implements WeatherService {
 
             System.out.println("Initializing WeatherService...");
 
-            WeatherServiceServer obj = new WeatherServiceServer();
-            WeatherService stub = (WeatherService) UnicastRemoteObject.exportObject(obj, 0);
+            WeatherServiceServer weatherServiceServer = new WeatherServiceServer();
+            WeatherService stub = (WeatherService) UnicastRemoteObject.exportObject(weatherServiceServer, 0);
 
             Registry registry = LocateRegistry.getRegistry();
             registry.bind("WeatherService", stub);
 
             System.out.println("WeatherService running.");
+
+            weatherServiceServer.updateWeatherConditions();
+
+            ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+            scheduledExecutorService.scheduleAtFixedRate(weatherServiceServer::updateWeatherConditions, 0, 1, TimeUnit.HOURS);
         } catch (Exception e) {
             System.out.println("Server exception: " + e.toString());
             e.printStackTrace();
