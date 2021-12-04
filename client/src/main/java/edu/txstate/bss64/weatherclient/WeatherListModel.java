@@ -1,6 +1,4 @@
 package edu.txstate.bss64.weatherclient;
-// WeatherListModel extends AbstractListModel to provide a 
-// ListModel for storing a List of WeatherBeans.
 
 import edu.txstate.bss64.weatherapi.WeatherBean;
 
@@ -9,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * WeatherListModel extends AbstractListModel to provide a
+ * ListModel for storing a List of WeatherBeans.
  */
 public class WeatherListModel extends AbstractListModel<WeatherBean> {
     private static final long serialVersionUID = 1;

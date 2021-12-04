@@ -1,6 +1,4 @@
 package edu.txstate.bss64.weatherserver;
-// WeatherServiceImpl implements the WeatherService remote
-// interface to provide a WeatherService remote object.
 
 import edu.txstate.bss64.weatherapi.WeatherBean;
 import edu.txstate.bss64.weatherapi.WeatherService;
@@ -21,7 +19,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- *
+ * WeatherServiceImpl implements the WeatherService remote
+ * interface to provide a WeatherService remote object.
  */
 public class WeatherServiceServer implements WeatherService {
 

@@ -1,5 +1,4 @@
 package edu.txstate.bss64.weatherclient;
-// WeatherItem displays a city's weather information in a JPanel.
 
 import edu.txstate.bss64.weatherapi.WeatherBean;
 
@@ -12,7 +11,7 @@ import java.awt.Graphics;
 import java.net.URL;
 
 /**
- *
+ * WeatherItem displays a city's weather information in a JPanel.
  */
 public class WeatherItem extends JPanel {
     private static final long serialVersionUID = 1;

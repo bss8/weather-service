@@ -1,7 +1,6 @@
 package edu.txstate.bss64.weatherapi;
 // WeatherBean maintains weather information for one city.
 
-import javax.print.DocFlavor;
 import javax.swing.ImageIcon;
 import java.io.*;
 import java.net.URISyntaxException;
@@ -9,7 +8,7 @@ import java.net.URL;
 import java.util.Properties;
 
 /**
- *
+ * A WeatherBean encapsulates weather information for one city.
  */
 public class WeatherBean implements Serializable {
     private final String cityName;         // name of city

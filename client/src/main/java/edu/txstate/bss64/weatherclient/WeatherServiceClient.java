@@ -1,6 +1,4 @@
 package edu.txstate.bss64.weatherclient;
-// WeatherServiceClient uses the WeatherService remote object
-// to retrieve weather information.
 
 import edu.txstate.bss64.weatherapi.WeatherBean;
 import edu.txstate.bss64.weatherapi.WeatherService;
@@ -18,7 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * WeatherServiceClient uses the WeatherService remote object
+ * to retrieve weather information.
  */
 public class WeatherServiceClient extends JFrame {
     // WeatherServiceClient constructor
